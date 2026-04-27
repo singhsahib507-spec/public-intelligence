@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>heil sahib singh code name Beetle</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07090f;--bg2:#0b0e1a;--bg3:#0f1322;
+  --surface:#131926;--surface2:#181f30;
+  --border:#1a2236;--border2:#1f2c45;
+  --text:#dce5f5;--text2:#6e82a8;--text3:#344560;
+  --accent:#2563eb;--accent2:#60a5fa;--accent-bg:rgba(37,99,235,0.1);
+  --red:#e84040;--red-bg:rgba(232,64,64,0.08);
+  --amber:#e89020;--amber-bg:rgba(232,144,32,0.08);
+  --green:#18c278;--green-bg:rgba(24,194,120,0.08);
+  --purple:#8050e8;--purple-bg:rgba(128,80,232,0.08);
+  --teal:#08b8d0;--teal-bg:rgba(8,184,208,0.08);
+  --font:'Inter',sans-serif;--font-d:'Syne',sans-serif;--mono:'JetBrains Mono',monospace;
+  --r:10px;--rsm:7px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 90% 60% at 50% -10%,rgba(37,99,235,0.06),transparent 70%);pointer-events:none;z-index:0}
+
+/* ═══ SHELL ═══ */
+.shell{display:flex;min-height:100vh;position:relative;z-index:1}
+
+/* ═══ SIDEBAR ═══ */
+.sidebar{width:255px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;transition:transform .3s}
+.sidebar::-webkit-scrollbar{width:0}
+
+.logo-wrap{padding:1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.logo-icon{width:34px;height:34px;flex-shrink:0;border-radius:8px;background:linear-gradient(135deg,#2563eb,#7c3aed);display:flex;align-items:center;justify-content:center;box-shadow:0 0 16px rgba(37,99,235,0.3)}
+.logo-icon svg{width:16px;height:16px;fill:white}
+.logo-txt{font-family:var(--font-d);font-size:15px;font-weight:700}
+.logo-txt em{color:var(--accent2);font-style:normal}
+.logo-sub{font-size:9px;color:var(--text3);font-family:var(--mono);letter-spacing:.07em;text-transform:uppercase;margin-top:1px}
+
+.sb-sec{padding:.75rem 1rem .5rem}
+.sb-lbl{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:.5rem;font-family:var(--mono)}
+.nav-btn{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--rsm);font-size:12px;font-weight:500;color:var(--text2);cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:all .12s;margin-bottom:1px}
+.nav-btn:hover{background:var(--surface);color:var(--text)}
+.nav-btn.active{background:var(--accent-bg);color:var(--accent2);border:1px solid rgba(37,99,235,0.2)}
+.ndot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.nn{margin-left:auto;font-size:10px;font-family:var(--mono);background:var(--bg3);padding:1px 6px;border-radius:20px;color:var(--text3);min-width:20px;text-align:center}
+.nav-btn.active .nn{background:rgba(37,99,235,0.15);color:var(--accent2)}
+
+/* Source toggles */
+.src-row{display:flex;align-items:center;gap:6px;padding:4px 10px;font-size:11px;color:var(--text3);cursor:pointer;border-radius:5px;transition:background .1s;user-select:none}
+.src-row:hover{background:var(--surface);color:var(--text2)}
+.chk{width:12px;height:12px;border-radius:3px;border:1.5px solid var(--border2);background:var(--bg3);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .1s}
+.chk.on{background:var(--accent);border-color:var(--accent)}
+.chk.on::after{content:'';display:block;width:6px;height:3.5px;border-left:1.5px solid #fff;border-bottom:1.5px solid #fff;transform:rotate(-45deg) translate(1px,-0.5px)}
+.sdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+/* KW */
+.kw-wrap{display:flex;flex-direction:column;gap:3px}
+.kw-tag{display:flex;align-items:center;justify-content:space-between;font-size:10px;font-family:var(--mono);background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:3px 7px;color:var(--text2);gap:5px}
+.kw-x{color:var(--text3);cursor:pointer;font-size:13px;line-height:1}
+.kw-x:hover{color:var(--red)}
+.kw-row{display:flex;gap:4px;margin-top:5px}
+.kw-row input{flex:1;font-size:10px;font-family:var(--mono);padding:4px 7px;border:1px solid var(--border);border-radius:4px;background:var(--bg3);color:var(--text);outline:none}
+.kw-row input:focus{border-color:var(--accent)}
+.kw-row input::placeholder{color:var(--text3)}
+.kw-row button{padding:4px 9px;border:1px solid var(--border);border-radius:4px;background:var(--surface);color:var(--text2);cursor:pointer;font-size:13px}
+.kw-row button:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+.sb-foot{margin-top:auto;padding:.875rem 1.25rem;border-top:1px solid var(--border)}
+.sb-foot-txt{font-size:10px;color:var(--text3);line-height:1.8;font-family:var(--mono)}
+.live-d{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:4px;animation:blink 2s infinite;box-shadow:0 0 4px var(--green)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* ═══ MAIN ═══ */
+.main{flex:1;padding:1.5rem 2rem;min-width:0}
+
+/* Mobile top bar */
+.mob-bar{display:none;align-items:center;justify-content:space-between;padding:.875rem 1rem;background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.mob-logo{font-family:var(--font-d);font-size:14px;font-weight:700}
+.mob-logo em{color:var(--accent2);font-style:normal}
+.mob-menu{width:34px;height:34px;border:1px solid var(--border);border-radius:7px;background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-direction:column;gap:4px;padding:8px}
+.mob-menu span{display:block;width:16px;height:1.5px;background:var(--text2);border-radius:2px;transition:all .2s}
+
+.top-row{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.page-h1{font-family:var(--font-d);font-size:20px;font-weight:800;letter-spacing:-.4px;background:linear-gradient(120deg,#dce5f5 20%,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.page-sub{font-size:11px;color:var(--text2);margin-top:3px;line-height:1.5}
+.top-btns{display:flex;gap:7px;align-items:center;flex-shrink:0}
+.btn-go{padding:9px 20px;font-size:13px;font-weight:700;font-family:var(--font-d);background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border:none;border-radius:var(--rsm);cursor:pointer;transition:all .18s;box-shadow:0 4px 16px rgba(37,99,235,0.3);white-space:nowrap}
+.btn-go:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(37,99,235,0.4)}
+.btn-go:active{transform:translateY(0)}
+.btn-go:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-ghost{padding:9px 14px;font-size:12px;background:transparent;color:var(--text2);border:1px solid var(--border);border-radius:var(--rsm);cursor:pointer;transition:all .12s;white-space:nowrap}
+.btn-ghost:hover{background:var(--surface);color:var(--text)}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin-bottom:1.125rem}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:.65rem .75rem;position:relative;overflow:hidden}
+.stat::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.stat:nth-child(1)::after{background:linear-gradient(90deg,var(--accent),var(--purple))}
+.stat:nth-child(2)::after{background:var(--red)}
+.stat:nth-child(3)::after{background:var(--amber)}
+.stat:nth-child(4)::after{background:var(--green)}
+.stat:nth-child(5)::after{background:var(--purple)}
+.stat:nth-child(6)::after{background:var(--teal)}
+.stat-l{font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:4px;font-family:var(--mono)}
+.stat-v{font-size:18px;font-weight:700;font-family:var(--font-d);letter-spacing:-1px;line-height:1}
+
+/* Progress */
+.prog{margin-bottom:1rem;display:none}
+.prog-top{display:flex;justify-content:space-between;margin-bottom:4px}
+.prog-l{font-size:11px;color:var(--text2);font-family:var(--mono)}
+.prog-p{font-size:11px;color:var(--accent2);font-family:var(--mono)}
+.prog-track{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--purple));border-radius:2px;width:0%;transition:width .35s}
+
+/* Source status pills */
+.src-status{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1rem;align-items:center}
+.src-pill{font-size:10px;font-family:var(--mono);padding:3px 8px;border-radius:20px;border:1px solid var(--border);color:var(--text3)}
+.src-pill.ok{border-color:rgba(24,194,120,0.3);color:var(--green);background:var(--green-bg)}
+.src-pill.fail{border-color:rgba(232,64,64,0.2);color:var(--red);background:var(--red-bg)}
+.src-pill.loading{border-color:rgba(37,99,235,0.2);color:var(--accent2);background:var(--accent-bg);animation:pulse .8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* Alert */
+.alert{border-radius:var(--rsm);padding:.75rem 1rem;font-size:12px;margin-bottom:.875rem;display:none;line-height:1.6;border:1px solid}
+.a-e{background:var(--red-bg);color:#ff9090;border-color:rgba(232,64,64,0.25)}
+.a-o{background:var(--green-bg);color:#50d898;border-color:rgba(24,194,120,0.25)}
+.a-w{background:var(--amber-bg);color:#f0c060;border-color:rgba(232,144,32,0.25)}
+
+/* Filter */
+.f-row{display:flex;gap:5px;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
+.chip{font-size:11px;font-weight:500;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;transition:all .12s;font-family:var(--mono)}
+.chip:hover{border-color:var(--border2);color:var(--text)}
+.chip.active{background:var(--accent-bg);border-color:rgba(37,99,235,0.35);color:var(--accent2)}
+.f-stat{font-size:10px;color:var(--text3);margin-left:auto;font-family:var(--mono)}
+
+/* Social */
+.soc-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:.875rem 1rem;margin-bottom:1rem}
+.soc-hd{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:.625rem;font-family:var(--mono)}
+.soc-grid{display:flex;gap:5px;flex-wrap:wrap}
+.soc-btn{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);cursor:pointer;transition:all .12s;font-family:var(--mono);white-space:nowrap;text-decoration:none}
+.soc-btn:hover{border-color:var(--border2);color:var(--text);background:var(--surface2)}
+.sdot2{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.soc-note{font-size:10px;color:var(--text3);margin-top:.5rem;line-height:1.5}
+
+/* Cards */
+.news-list{display:flex;flex-direction:column;gap:7px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:.875rem 1.125rem;transition:all .12s;animation:rise .3s ease both;position:relative;overflow:hidden}
+@keyframes rise{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.card[data-c="competitor"]::before{background:var(--red)}
+.card[data-c="price"]::before{background:var(--amber)}
+.card[data-c="material"]::before{background:var(--green)}
+.card[data-c="industry"]::before{background:var(--purple)}
+.card[data-c="social"]::before{background:var(--teal)}
+.card:hover{border-color:var(--border2);background:var(--surface2)}
+.card-top{display:flex;align-items:flex-start;gap:6px;margin-bottom:4px;padding-left:6px;flex-wrap:wrap}
+.bdg{font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:4px;flex-shrink:0;margin-top:2px;font-family:var(--mono)}
+.b-c{background:var(--red-bg);color:var(--red);border:1px solid rgba(232,64,64,0.2)}
+.b-p{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(232,144,32,0.2)}
+.b-m{background:var(--green-bg);color:var(--green);border:1px solid rgba(24,194,120,0.2)}
+.b-i{background:var(--purple-bg);color:var(--purple);border:1px solid rgba(128,80,232,0.2)}
+.b-s{background:var(--teal-bg);color:var(--teal);border:1px solid rgba(8,184,208,0.2)}
+.src-tag{font-size:9px;padding:2px 7px;border-radius:4px;flex-shrink:0;margin-top:2px;background:var(--bg3);color:var(--text3);border:1px solid var(--border);font-family:var(--mono)}
+.card-ttl{font-size:13px;font-weight:600;line-height:1.4;flex:1;min-width:0}
+.card-ttl a{color:var(--text);text-decoration:none}
+.card-ttl a:hover{color:var(--accent2)}
+.card-meta{font-size:10px;color:var(--text3);font-family:var(--mono);margin-bottom:5px;padding-left:6px}
+.card-desc{font-size:12px;color:var(--text2);line-height:1.55;padding-left:6px}
+.card-link{font-size:10px;color:var(--accent2);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:3px;margin-top:7px;padding-left:6px;font-family:var(--mono)}
+.card-link:hover{opacity:.7}
+
+.empty{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:3rem 1.5rem;text-align:center}
+.empty-ico{font-size:36px;margin-bottom:12px}
+.empty h3{font-family:var(--font-d);font-size:15px;font-weight:700;margin-bottom:5px}
+.empty p{font-size:12px;color:var(--text2);max-width:380px;margin:0 auto;line-height:1.7}
+
+/* Overlay for mobile sidebar */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200}
+.overlay.show{display:block}
+
+#toast{position:fixed;bottom:20px;right:20px;background:var(--surface2);color:var(--text);font-size:11px;padding:9px 14px;font-family:var(--mono);border-radius:var(--rsm);border:1px solid var(--border2);opacity:0;pointer-events:none;transition:opacity .2s;z-index:999;box-shadow:0 6px 20px rgba(0,0,0,0.5)}
+#toast.show{opacity:1}
+
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:860px){
+  .sidebar{position:fixed;left:0;top:0;bottom:0;z-index:300;transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .mob-bar{display:flex}
+  .main{padding:.875rem 1rem}
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .top-row{gap:.75rem}
+  .page-h1{font-size:17px}
+}
+@media(max-width:480px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .top-btns{width:100%}
+  .btn-go{flex:1}
+  .btn-ghost{flex:1}
+}
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<div class="shell">
+<!-- ═══ SIDEBAR ═══ -->
+<aside class="sidebar" id="sidebar">
+  <div class="logo-wrap">
+    <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zm11 0h7v7h-7zM3 14h7v7H3zm13 3a4 4 0 100-8 4 4 0 000 8z"/></svg></div>
+    <div><div class="logo-txt">Packaging<em>Intel</em></div><div class="logo-sub">Marketing Intelligence</div></div>
+  </div>
+
+  <div class="sb-sec">
+    <div class="sb-lbl">Categories</div>
+    <button class="nav-btn active" onclick="setFilter('all',this)"><span class="ndot" style="background:var(--accent2)"></span>All articles<span class="nn" id="n-all">0</span></button>
+    <button class="nav-btn" onclick="setFilter('competitor',this)"><span class="ndot" style="background:var(--red)"></span>Competitor<span class="nn" id="n-comp">0</span></button>
+    <button class="nav-btn" onclick="setFilter('price',this)"><span class="ndot" style="background:var(--amber)"></span>Price signals<span class="nn" id="n-price">0</span></button>
+    <button class="nav-btn" onclick="setFilter('material',this)"><span class="ndot" style="background:var(--green)"></span>Raw materials<span class="nn" id="n-mat">0</span></button>
+    <button class="nav-btn" onclick="setFilter('industry',this)"><span class="ndot" style="background:var(--purple)"></span>Industry<span class="nn" id="n-ind">0</span></button>
+    <button class="nav-btn" onclick="setFilter('social',this)"><span class="ndot" style="background:var(--teal)"></span>PR / Social<span class="nn" id="n-soc">0</span></button>
+  </div>
+
+  <div class="sb-sec">
+    <div class="sb-lbl">Sources</div>
+    <div id="src-list"></div>
+  </div>
+
+  <div class="sb-sec">
+    <div class="sb-lbl">Filter keywords</div>
+    <div class="kw-wrap" id="kw-list"></div>
+    <div class="kw-row" style="margin-top:5px">
+      <input type="text" id="kw-inp" placeholder="Add keyword…" onkeydown="if(event.key==='Enter')addKw()"/>
+      <button onclick="addKw()">+</button>
+    </div>
+  </div>
+
+  <div class="sb-foot">
+    <div class="sb-foot-txt"><span class="live-d"></span>Live intelligence<br/><span id="src-active">0 sources loaded</span><br/><span id="sb-time"></span></div>
+  </div>
+</aside>
+
+<!-- ═══ MAIN ═══ -->
+<div style="flex:1;display:flex;flex-direction:column;min-width:0">
+
+  <!-- Mobile top bar -->
+  <div class="mob-bar">
+    <div class="mob-logo">Packaging<em>Intel</em></div>
+    <div class="mob-menu" onclick="openSidebar()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <main class="main">
+    <div class="top-row">
+      <div>
+        <div class="page-h1">Marketing Intelligence</div>
+        <div class="page-sub">Flexible plastic packaging · Competitors · Film & pellet prices · Raw materials · India industry</div>
+      </div>
+      <div class="top-btns">
+        <button class="btn-ghost" onclick="clearAll()">✕ Clear</button>
+        <button class="btn-go" id="fetch-btn" onclick="fetchAll()">⬡ Fetch News</button>
+      </div>
+    </div>
+
+    <div class="alert a-e" id="a-e"></div>
+    <div class="alert a-o" id="a-o"></div>
+    <div class="alert a-w" id="a-w"></div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-l">Total</div><div class="stat-v" style="color:var(--accent2)" id="s-tot">—</div></div>
+      <div class="stat"><div class="stat-l">Competitor</div><div class="stat-v" style="color:var(--red)" id="s-comp">—</div></div>
+      <div class="stat"><div class="stat-l">Price signals</div><div class="stat-v" style="color:var(--amber)" id="s-price">—</div></div>
+      <div class="stat"><div class="stat-l">Materials</div><div class="stat-v" style="color:var(--green)" id="s-mat">—</div></div>
+      <div class="stat"><div class="stat-l">Industry</div><div class="stat-v" style="color:var(--purple)" id="s-ind">—</div></div>
+      <div class="stat"><div class="stat-l">PR/Social</div><div class="stat-v" style="color:var(--teal)" id="s-soc">—</div></div>
+    </div>
+
+    <div class="prog" id="prog">
+      <div class="prog-top"><span class="prog-l" id="prog-l">Fetching…</span><span class="prog-p" id="prog-p">0%</span></div>
+      <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+    </div>
+
+    <div class="src-status" id="src-status"></div>
+
+    <div class="f-row">
+      <button class="chip active" onclick="setChip('all',this)">All</button>
+      <button class="chip" onclick="setChip('competitor',this)">Competitor</button>
+      <button class="chip" onclick="setChip('price',this)">Prices</button>
+      <button class="chip" onclick="setChip('material',this)">Materials</button>
+      <button class="chip" onclick="setChip('industry',this)">Industry</button>
+      <button class="chip" onclick="setChip('social',this)">PR/Social</button>
+      <span class="f-stat" id="f-stat"></span>
+    </div>
+
+    <div class="soc-box">
+      <div class="soc-hd">Social media monitoring — tap to open (free, public posts)</div>
+      <div class="soc-grid">
+        <a class="soc-btn" onclick="os('https://www.social-searcher.com/social-search/?q=flexible+packaging+film&network=facebook')"><span class="sdot2" style="background:#1877F2"></span>Facebook</a>
+        <a class="soc-btn" onclick="os('https://www.social-searcher.com/social-search/?q=BOPP+film+price&network=instagram')"><span class="sdot2" style="background:#E1306C"></span>Instagram</a>
+        <a class="soc-btn" onclick="os('https://www.social-searcher.com/social-search/?q=plastic+packaging+film+resin')"><span class="sdot2" style="background:#1DA1F2"></span>Twitter/X</a>
+        <a class="soc-btn" onclick="os('https://www.social-searcher.com/social-search/?q=Uflex+OR+Cosmo+Films+OR+Jindal+Poly')"><span class="sdot2" style="background:#1877F2"></span>Competitors</a>
+        <a class="soc-btn" onclick="os('https://www.linkedin.com/search/results/content/?keywords=flexible%20packaging%20film%20manufacturer')"><span class="sdot2" style="background:#0A66C2"></span>LinkedIn</a>
+        <a class="soc-btn" onclick="os('https://www.google.com/search?q=flexible+packaging+film+price&tbm=nws&tbs=qdr:w')"><span class="sdot2" style="background:#4285F4"></span>Google News</a>
+        <a class="soc-btn" onclick="os('https://economictimes.indiatimes.com/topic/flexible-packaging')"><span class="sdot2" style="background:#e65c00"></span>Economic Times</a>
+        <a class="soc-btn" onclick="os('https://www.indiamart.com/search.mp?ss=flexible+packaging+film')"><span class="sdot2" style="background:#FF6B00"></span>IndiaMart prices</a>
+        <a class="soc-btn" onclick="os('https://www.plasticsnews.com/section/resin-pricing')"><span class="sdot2" style="background:#1a4f8a"></span>Plastics News</a>
+        <a class="soc-btn" onclick="os('https://www.icis.com/explore/resources/news/')"><span class="sdot2" style="background:#08b8d0"></span>ICIS chemicals</a>
+      </div>
+      <div class="soc-note">⚑ Instagram & Facebook block direct scraping — Social Searcher monitors public posts free. All links open in a new tab.</div>
+    </div>
+
+    <div class="news-list" id="news-list">
+      <div class="empty">
+        <div class="empty-ico">📡</div>
+        <h3>Ready — tap Fetch News</h3>
+        <p>Pulls from NewsAPI (15 searches) + 4 fallback sources. If any source fails, others automatically fill in. Works on mobile too.</p>
+      </div>
+    </div>
+  </main>
+</div>
+</div>
+<div id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// API KEY — baked in, boss just opens the link and clicks Fetch
+// ═══════════════════════════════════════════════════════════════
+const NEWS_API_KEY = '004ed012e3e34df197a0ddc900af79c6';
+
+// ═══════════════════════════════════════════════════════════════
+// SOURCE DEFINITIONS — multiple layers with fallback logic
+// If one fails, next automatically fires
+// ═══════════════════════════════════════════════════════════════
+const SOURCES = [
+  // ── Layer 1: NewsAPI (most reliable, CORS-safe) ──
+  { id:'na-comp1', label:'Uflex / UFlex news',            type:'newsapi', q:'"Uflex" OR "UFlex" flexible packaging film',                 cat:'competitor', color:'#e84040', on:true },
+  { id:'na-comp2', label:'Cosmo Films / Jindal Poly',     type:'newsapi', q:'"Cosmo Films" OR "Jindal Poly Films" packaging',             cat:'competitor', color:'#e84040', on:true },
+  { id:'na-comp3', label:'Global competitors',            type:'newsapi', q:'Polyplex OR Huhtamaki OR Amcor OR "Berry Global" packaging', cat:'competitor', color:'#e84040', on:true },
+  { id:'na-comp4', label:'New product launches',          type:'newsapi', q:'flexible packaging manufacturer launch new film product',    cat:'competitor', color:'#e84040', on:true },
+  { id:'na-comp5', label:'M&A deals',                     type:'newsapi', q:'packaging company acquisition merger deal 2025',             cat:'competitor', color:'#e84040', on:true },
+  { id:'na-pr1',   label:'BOPP film prices',              type:'newsapi', q:'BOPP film price increase decrease 2025',                    cat:'price',      color:'#e89020', on:true },
+  { id:'na-pr2',   label:'LDPE / LLDPE prices',           type:'newsapi', q:'LDPE LLDPE polyethylene pellets price 2025',                cat:'price',      color:'#e89020', on:true },
+  { id:'na-pr3',   label:'Polypropylene price',           type:'newsapi', q:'polypropylene PP price packaging market',                   cat:'price',      color:'#e89020', on:true },
+  { id:'na-pr4',   label:'Packaging material costs',      type:'newsapi', q:'plastic packaging material cost price change',              cat:'price',      color:'#e89020', on:true },
+  { id:'na-mat1',  label:'Resin market',                  type:'newsapi', q:'polyethylene resin price market supply demand',             cat:'material',   color:'#18c278', on:true },
+  { id:'na-mat2',  label:'Petrochemical feedstock',       type:'newsapi', q:'naphtha ethylene propylene price petrochemical 2025',       cat:'material',   color:'#18c278', on:true },
+  { id:'na-mat3',  label:'Raw material supply',           type:'newsapi', q:'plastic resin supply shortage surplus packaging',           cat:'material',   color:'#18c278', on:true },
+  { id:'na-ind1',  label:'India packaging industry',      type:'newsapi', q:'India flexible packaging plastic film industry 2025',       cat:'industry',   color:'#8050e8', on:true },
+  { id:'na-ind2',  label:'Regulations & bans',            type:'newsapi', q:'plastic packaging regulation ban sustainability 2025',      cat:'industry',   color:'#8050e8', on:true },
+  { id:'na-ind3',  label:'Market outlook',                type:'newsapi', q:'flexible packaging market growth forecast demand 2025',     cat:'industry',   color:'#8050e8', on:true },
+
+  // ── Layer 2: GNews API (free, 100/day, no key needed for basic) ──
+  { id:'gn-pkg',   label:'GNews: Packaging',              type:'gnews',   q:'flexible packaging film manufacturer',                      cat:'industry',   color:'#4285F4', on:true },
+  { id:'gn-pr',    label:'GNews: Resin prices',           type:'gnews',   q:'BOPP LDPE resin price 2025',                               cat:'price',      color:'#4285F4', on:true },
+  { id:'gn-comp',  label:'GNews: India companies',        type:'gnews',   q:'Uflex Cosmo Films Jindal packaging',                       cat:'competitor', color:'#4285F4', on:true },
+
+  // ── Layer 3: RSS via multiple proxies with auto-fallback ──
+  { id:'rss-pn',   label:'Plastics News RSS',             type:'rss', url:'https://www.plasticsnews.com/rss/news',                      cat:'industry',   color:'#1a4f8a', on:true },
+  { id:'rss-pt',   label:'Plastics Today RSS',            type:'rss', url:'https://www.plasticstoday.com/rss.xml',                     cat:'industry',   color:'#0d5c4a', on:true },
+  { id:'rss-pw',   label:'Packaging World RSS',           type:'rss', url:'https://www.packworld.com/rss.xml',                         cat:'industry',   color:'#4a3096', on:true },
+  { id:'rss-pd',   label:'Packaging Digest RSS',          type:'rss', url:'https://www.packagingdigest.com/rss.xml',                   cat:'industry',   color:'#7c3aed', on:true },
+  { id:'rss-gnp',  label:'Google News: Packaging RSS',    type:'rss', url:'https://news.google.com/rss/search?q=flexible+packaging+film+manufacturer&hl=en-IN&gl=IN&ceid=IN:en', cat:'industry', color:'#4285F4', on:true },
+  { id:'rss-gnr',  label:'Google News: Resin prices RSS', type:'rss', url:'https://news.google.com/rss/search?q=BOPP+LDPE+resin+price+2025&hl=en&gl=US&ceid=US:en',            cat:'price',    color:'#EA4335', on:true },
+  { id:'rss-gnc',  label:'Google News: Competitors RSS',  type:'rss', url:'https://news.google.com/rss/search?q=Uflex+OR+Cosmo+Films+OR+Jindal+Poly+packaging&hl=en-IN&gl=IN&ceid=IN:en', cat:'competitor', color:'#FBBC04', on:true },
+  { id:'rss-gni',  label:'Google News: India RSS',        type:'rss', url:'https://news.google.com/rss/search?q=India+flexible+packaging+plastic+film+industry&hl=en-IN&gl=IN&ceid=IN:en', cat:'industry', color:'#34A853', on:true },
+  { id:'rss-r1',   label:'Reddit r/plastics',             type:'rss', url:'https://www.reddit.com/r/plastics/new/.rss',                cat:'industry',   color:'#FF4500', on:true },
+  { id:'rss-r2',   label:'Reddit r/packaging',            type:'rss', url:'https://www.reddit.com/r/packaging/new/.rss',               cat:'industry',   color:'#FF4500', on:true },
+  { id:'rss-et',   label:'Economic Times: Packaging',     type:'rss', url:'https://economictimes.indiatimes.com/industry/indl-goods/svs/packaging/rssfeeds/20408670.cms', cat:'industry', color:'#e65c00', on:true },
+  { id:'rss-gnw',  label:'GlobeNewswire: Packaging',      type:'rss', url:'https://www.globenewswire.com/RssFeed/subjectcode/26-Packaging', cat:'social', color:'#0891b2', on:true },
+  { id:'rss-bw',   label:'BusinessWire: Packaging',       type:'rss', url:'https://feed.businesswire.com/rss/home/?rss=G1&keyword=flexible+packaging', cat:'social', color:'#0e7490', on:true },
+  { id:'rss-icis', label:'ICIS Chemical News',            type:'rss', url:'https://www.icis.com/explore/resources/news/rss/',          cat:'material',   color:'#1e3a5f', on:true },
+];
+
+// RSS proxy cascade — tries each until one works
+const RSS_PROXIES = [
+  url => `https://api.rss2json.com/v1/api.json?count=15&rss_url=${encodeURIComponent(url)}`,
+  url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+  url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+  url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+];
+
+// GNews API (free, 100/day, no key, CORS-safe)
+const GNEWS_KEY = ''; // Optional — works without key for basic queries
+
+// Categories
+const CAT = {
+  price:['price','cost','surge','rise','fall','drop','hike','spike','higher','lower','cheaper','decline','tariff','inflation','margin','jump','plunge','rally','expensive','increase','decrease'],
+  competitor:['Uflex','UFlex','Cosmo Films','Cosmo','Jindal','Polyplex','Huhtamaki','Berry Global','Amcor','Sealed Air','Mondi','Coveris','Winpak','ProAmpac','launch','new product','competitor','rival','expand','acquisition','merger','capacity','plant','market share','introduce','announce','unveil','deal','contract'],
+  material:['resin','pellet','BOPP','LDPE','LLDPE','PET','polypropylene','polyethylene','naphtha','ethylene','feedstock','polymer','monomer','crude','propylene','butene','HDPE','EVA','biaxially oriented'],
+  social:['press release','announced','unveiled','awarded','appointed','partnership signed','agreement signed','inaugurated','inaugurates','signs deal'],
+};
+function categorize(t,d,defCat){
+  const s=(t+' '+(d||'')).toLowerCase();
+  if(CAT.material.some(k=>s.includes(k.toLowerCase())))return'material';
+  if(CAT.price.some(k=>s.includes(k.toLowerCase())))return'price';
+  if(CAT.competitor.some(k=>s.includes(k.toLowerCase())))return'competitor';
+  if(CAT.social.some(k=>s.includes(k.toLowerCase())))return'social';
+  return defCat||'industry';
+}
+
+// State
+let allArticles=[], currentFilter='all';
+let sourceStatus={};
+let keywords=['flexible packaging','BOPP film','LDPE pellets','resin price','polyethylene','packaging manufacturer','Uflex','Cosmo Films','Jindal Poly'];
+
+// ── Sidebar mobile ────────────────────────────────────────────
+function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('overlay').classList.add('show');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('show');}
+
+// ── Source UI ─────────────────────────────────────────────────
+function renderSources(){
+  document.getElementById('src-list').innerHTML=SOURCES.map(s=>`
+    <div class="src-row" onclick="toggleSrc('${s.id}')">
+      <div class="chk ${s.on?'on':''}" id="chk-${s.id}"></div>
+      <span class="sdot" style="background:${s.color}"></span>
+      <span>${s.label}</span>
+    </div>`).join('');
+}
+function toggleSrc(id){const s=SOURCES.find(x=>x.id===id);if(!s)return;s.on=!s.on;const el=document.getElementById('chk-'+id);if(el)el.classList.toggle('on',s.on);}
+
+// ── Source status pills ───────────────────────────────────────
+function setSourceStatus(id, state){
+  sourceStatus[id]=state;
+  const box=document.getElementById('src-status');
+  const src=SOURCES.find(s=>s.id===id);
+  if(!src)return;
+  let el=document.getElementById('spill-'+id);
+  if(!el){el=document.createElement('span');el.id='spill-'+id;el.className='src-pill';box.appendChild(el);}
+  el.className='src-pill '+(state==='ok'?'ok':state==='fail'?'fail':'loading');
+  el.textContent=src.label+(state==='ok'?' ✓':state==='fail'?' ✗':'…');
+}
+
+// ── Keywords ─────────────────────────────────────────────────
+function renderKw(){document.getElementById('kw-list').innerHTML=keywords.map((k,i)=>`<div class="kw-tag"><span>${k}</span><span class="kw-x" onclick="rmKw(${i})">&times;</span></div>`).join('');}
+function addKw(){const i=document.getElementById('kw-inp');const v=i.value.trim();if(v&&!keywords.includes(v)){keywords.push(v);renderKw();renderArticles();toast('Added: '+v);}i.value='';}
+function rmKw(i){keywords.splice(i,1);renderKw();renderArticles();}
+function isRelevant(a){if(!keywords.length)return true;const t=(a.title+' '+(a.desc||'')).toLowerCase();return keywords.some(k=>t.includes(k.toLowerCase()));}
+
+// ── Helpers ──────────────────────────────────────────────────
+function clean(t){return(t||'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();}
+function timeAgo(d){if(!d||isNaN(d))return'recently';const s=(Date.now()-d)/1000;if(s<60)return'just now';if(s<3600)return Math.round(s/60)+'m ago';if(s<86400)return Math.round(s/3600)+'h ago';return Math.round(s/86400)+'d ago';}
+function showAlert(type,msg){['e','o','w'].forEach(t=>document.getElementById('a-'+t).style.display='none');const el=document.getElementById('a-'+type);el.innerHTML=msg;el.style.display='block';if(type!=='e')setTimeout(()=>el.style.display='none',7000);}
+function setProg(pct,lbl){document.getElementById('prog').style.display='block';document.getElementById('prog-l').textContent=lbl||'…';document.getElementById('prog-p').textContent=Math.round(pct)+'%';document.getElementById('prog-fill').style.width=pct+'%';}
+function hideProg(){setTimeout(()=>{document.getElementById('prog').style.display='none';document.getElementById('prog-fill').style.width='0%';},1000);}
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000);}
+function os(url){window.open(url,'_blank');}
+
+// ── Dedup ─────────────────────────────────────────────────────
+const seen=new Set();
+function addArticle(a,group){
+  if(!a.title||a.title.length<8)return false;
+  const key=a.title.toLowerCase().replace(/\s+/g,' ').slice(0,55);
+  if(seen.has(key))return false;
+  seen.add(key);
+  if(!isRelevant(a))return false;
+  allArticles.push({...a,group,cat:categorize(a.title,a.desc,a.defCat)});
+  return true;
+}
+
+// ── NewsAPI fetch ─────────────────────────────────────────────
+async function fetchNewsAPI(src){
+  setSourceStatus(src.id,'loading');
+  try{
+    const url=`https://newsapi.org/v2/everything?q=${encodeURIComponent(src.q)}&language=en&sortBy=publishedAt&pageSize=15&apiKey=${NEWS_API_KEY}`;
+    const r=await fetch(url,{signal:AbortSignal.timeout(12000)});
+    const d=await r.json();
+    if(d.status==='error'){
+      if(d.code==='apiKeyInvalid')throw new Error('INVALID_KEY');
+      if(d.code==='rateLimited')throw new Error('RATE_LIMITED');
+      throw new Error(d.message);
+    }
+    let added=0;
+    for(const a of(d.articles||[])){
+      if(!a.title||a.title==='[Removed]'||!a.url)continue;
+      if(addArticle({title:a.title,link:a.url,desc:clean(a.description||'').slice(0,280),pubDate:new Date(a.publishedAt),source:a.source?.name||'NewsAPI',defCat:src.cat},'NewsAPI'))added++;
+    }
+    setSourceStatus(src.id,'ok');
+    return added;
+  }catch(e){
+    setSourceStatus(src.id,'fail');
+    throw e;
+  }
+}
+
+// ── GNews fetch (free, no key, CORS-safe) ────────────────────
+async function fetchGNews(src){
+  setSourceStatus(src.id,'loading');
+  try{
+    const url=`https://gnews.io/api/v4/search?q=${encodeURIComponent(src.q)}&lang=en&max=10&token=${GNEWS_KEY||'demo'}`;
+    const r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+    if(!r.ok)throw new Error('GNews '+r.status);
+    const d=await r.json();
+    let added=0;
+    for(const a of(d.articles||[])){
+      if(addArticle({title:a.title,link:a.url,desc:clean(a.description||'').slice(0,280),pubDate:new Date(a.publishedAt||Date.now()),source:a.source?.name||'GNews',defCat:src.cat},'GNews'))added++;
+    }
+    setSourceStatus(src.id, added>0?'ok':'fail');
+    return added;
+  }catch(e){setSourceStatus(src.id,'fail');return 0;}
+}
+
+// ── RSS fetch with proxy cascade ─────────────────────────────
+async function fetchRSS(src){
+  setSourceStatus(src.id,'loading');
+  for(const proxyFn of RSS_PROXIES){
+    try{
+      const proxyUrl=proxyFn(src.url);
+      const r=await fetch(proxyUrl,{signal:AbortSignal.timeout(12000)});
+      if(!r.ok)continue;
+      const text=await r.text();
+      // rss2json returns JSON
+      if(text.trim().startsWith('{')){
+        const d=JSON.parse(text);
+        if(d.status==='ok'&&d.items?.length>0){
+          let added=0;
+          for(const i of d.items){
+            if(addArticle({title:clean(i.title||''),link:i.link||i.guid||'#',desc:clean(i.description||i.content||'').slice(0,280),pubDate:i.pubDate?new Date(i.pubDate):new Date(),source:d.feed?.title||src.label,defCat:src.cat},'RSS'))added++;
+          }
+          if(added>0){setSourceStatus(src.id,'ok');return added;}
+        }
+        continue;
+      }
+      // XML response — parse manually
+      const items=parseXML(text,src);
+      let added=0;
+      for(const a of items){if(addArticle(a,'RSS'))added++;}
+      if(added>0){setSourceStatus(src.id,'ok');return added;}
+    }catch(e){/* try next proxy */}
+  }
+  setSourceStatus(src.id,'fail');
+  return 0;
+}
+
+function parseXML(xml,src){
+  try{
+    const doc=new DOMParser().parseFromString(xml,'text/xml');
+    return[...doc.querySelectorAll('item,entry')].map(el=>{
+      const title=clean(el.querySelector('title')?.textContent||'');
+      const link=el.querySelector('link')?.textContent?.trim()||el.querySelector('link')?.getAttribute('href')||'#';
+      const desc=clean((el.querySelector('description,summary,content')?.textContent||'').slice(0,280));
+      const pub=el.querySelector('pubDate,published,updated')?.textContent||'';
+      return{title,link,desc,pubDate:pub?new Date(pub):new Date(),source:src.label,defCat:src.cat};
+    }).filter(a=>a.title.length>8&&!a.title.startsWith('<?'));
+  }catch(e){return[];}
+}
+
+// ═══ MAIN FETCH ═══════════════════════════════════════════════
+async function fetchAll(){
+  const btn=document.getElementById('fetch-btn');
+  btn.disabled=true;btn.textContent='⟳ Fetching…';
+  ['e','o','w'].forEach(t=>document.getElementById('a-'+t).style.display='none');
+  document.getElementById('src-status').innerHTML='';
+  seen.clear();allArticles=[];sourceStatus={};
+  setProg(2,'Starting…');
+  document.getElementById('news-list').innerHTML='<div class="empty"><div class="empty-ico">⟳</div><h3>Fetching from all sources…</h3><p>NewsAPI + GNews + RSS feeds with automatic fallback. If any source fails, others continue loading.</p></div>';
+
+  const activeSources=SOURCES.filter(s=>s.on);
+  let done=0, naError='', rssLoaded=0, naLoaded=0;
+
+  // ── Run all in parallel with concurrency limit ──
+  const CONCURRENCY=6;
+  for(let i=0;i<activeSources.length;i+=CONCURRENCY){
+    const batch=activeSources.slice(i,i+CONCURRENCY);
+    setProg(2+(done/activeSources.length)*90,'Fetching batch '+(Math.floor(i/CONCURRENCY)+1)+'…');
+    await Promise.allSettled(batch.map(async src=>{
+      try{
+        let n=0;
+        if(src.type==='newsapi') n=await fetchNewsAPI(src);
+        else if(src.type==='gnews') n=await fetchGNews(src);
+        else if(src.type==='rss') n=await fetchRSS(src);
+        if(src.type==='newsapi') naLoaded+=n;
+        else rssLoaded+=n;
+      }catch(e){
+        if(e.message==='INVALID_KEY'){naError='invalid';}
+        else if(e.message==='RATE_LIMITED'){naError='ratelimit';}
+        setSourceStatus(src.id,'fail');
+      }finally{
+        done++;
+        allArticles.sort((a,b)=>b.pubDate-a.pubDate);
+        updateStats();renderArticles();
+        document.getElementById('src-active').textContent=allArticles.length+' articles loaded';
+      }
+    }));
+  }
+
+  allArticles.sort((a,b)=>b.pubDate-a.pubDate);
+  allArticles=allArticles.slice(0,300);
+  setProg(100,'Done!');hideProg();
+  updateStats();renderArticles();
+
+  const now=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('sb-time').textContent='Updated '+now;
+  document.getElementById('f-stat').textContent=allArticles.length+' articles';
+  btn.disabled=false;btn.textContent='⬡ Refresh';
+
+  if(naError==='invalid'){showAlert('e','⚠ NewsAPI key issue — RSS and GNews sources still loaded. Check the API key.');}
+  else if(naError==='ratelimit'){showAlert('w','⚠ NewsAPI rate limit hit (100/day) — RSS and GNews sources still loaded.');}
+
+  if(allArticles.length===0){
+    showAlert('e','No articles loaded. All sources may be temporarily down. Try again in a minute.');
+    document.getElementById('news-list').innerHTML='<div class="empty"><div class="empty-ico">⚠️</div><h3>Nothing loaded</h3><p>All sources failed simultaneously — this is very rare. Wait a minute and tap Fetch again.</p></div>';
+  }else{
+    const okSrcs=Object.values(sourceStatus).filter(s=>s==='ok').length;
+    const failSrcs=Object.values(sourceStatus).filter(s=>s==='fail').length;
+    showAlert('o',`✓ Loaded ${allArticles.length} articles — ${okSrcs} sources OK${failSrcs>0?', '+failSrcs+' sources failed (others covered them)':''}`);
+    toast('✓ '+allArticles.length+' articles loaded');
+  }
+}
+
+function clearAll(){seen.clear();allArticles=[];updateStats();renderArticles();document.getElementById('f-stat').textContent='';document.getElementById('src-status').innerHTML='';}
+
+// ── Stats ─────────────────────────────────────────────────────
+function updateStats(){
+  const t=allArticles.length;
+  const c=allArticles.filter(a=>a.cat==='competitor').length;
+  const p=allArticles.filter(a=>a.cat==='price').length;
+  const m=allArticles.filter(a=>a.cat==='material').length;
+  const s=allArticles.filter(a=>a.cat==='social').length;
+  const ind=t-c-p-m-s;
+  ['tot','comp','price','mat','ind','soc'].forEach((id,i)=>document.getElementById('s-'+id).textContent=[t,c,p,m,ind,s][i]);
+  ['all','comp','price','mat','ind','soc'].forEach((id,i)=>document.getElementById('n-'+id).textContent=[t,c,p,m,ind,s][i]);
+}
+
+// ── Render cards ──────────────────────────────────────────────
+const BCLS={competitor:'b-c',price:'b-p',material:'b-m',industry:'b-i',social:'b-s'};
+const BLBL={competitor:'Competitor',price:'Price signal',material:'Raw material',industry:'Industry',social:'PR/Announce'};
+function renderArticles(){
+  const list=document.getElementById('news-list');
+  const arr=currentFilter==='all'?allArticles:allArticles.filter(a=>a.cat===currentFilter);
+  if(!arr.length){
+    if(allArticles.length>0)list.innerHTML='<div class="empty"><div class="empty-ico">🔍</div><h3>No articles in this category</h3><p>Try a different filter.</p></div>';
+    return;
+  }
+  list.innerHTML=arr.map((a,i)=>`
+    <div class="card" data-c="${a.cat}" style="animation-delay:${Math.min(i*15,500)}ms">
+      <div class="card-top">
+        <span class="bdg ${BCLS[a.cat]}">${BLBL[a.cat]}</span>
+        <span class="src-tag">${a.source||a.group}</span>
+        <div class="card-ttl"><a href="${a.link}" target="_blank" rel="noopener">${a.title}</a></div>
+      </div>
+      <div class="card-meta">${timeAgo(a.pubDate)}</div>
+      <div class="card-desc">${a.desc||''}</div>
+      <a class="card-link" href="${a.link}" target="_blank" rel="noopener">Read full article ↗</a>
+    </div>`).join('');
+}
+
+// ── Filters ───────────────────────────────────────────────────
+function setFilter(f,btn){currentFilter=f;document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');syncChips();renderArticles();closeSidebar();}
+function setChip(f,btn){currentFilter=f;document.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));btn.classList.add('active');syncNavBtns();renderArticles();}
+function syncChips(){const o=['all','competitor','price','material','industry','social'];document.querySelectorAll('.chip').forEach((b,i)=>b.classList.toggle('active',o[i]===currentFilter));}
+function syncNavBtns(){const o=['all','competitor','price','material','industry','social'];document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',o[i]===currentFilter));}
+
+// Init
+renderSources();
+renderKw();
+</script>
+</body>
+</html>
